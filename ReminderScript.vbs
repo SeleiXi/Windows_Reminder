@@ -1,4 +1,4 @@
-'å¦‚å‡ºç¾å ±éŒ¯ï¼Œå°‡æ–‡ä»¶ä»¥ANSIç·¨ç¢¼ä¿å­˜
+'Èç³ö¬Fˆóåe£¬Œ¢ÎÄ¼şÒÔANSI¾´a±£´æ
 
 set ws = wscript.createObject("Wscript.Shell")
 set fso = createObject("scripting.filesystemobject")
@@ -6,10 +6,10 @@ Set wshShell = createObject("WScript.Shell")
 
 path = fso.getFile(wscript.scriptFullName).parentFolder + "\"
 
-input = msgBox("1.é–‹æ©Ÿæé†’ï¼šAbort" & vbCrLf & "2.é‡è©¦ï¼šRetry " & vbCrLf & "3.æ¯å¤©çš„æŒ‡å®šæ™‚é–“æé†’ï¼šIgnore",2+64,"å®šæ™‚æé†’å™¨")
-content = inputBox("è«‹è¼¸å…¥è¦æé†’çš„äº‹é …","æé†’å…§å®¹")
+input = msgBox("1.é_™CÌáĞÑ£ºAbort" & vbCrLf & "2.ÖØÔ‡£ºRetry " & vbCrLf & "3.Ã¿ÌìµÄÖ¸¶¨•régÌáĞÑ£ºIgnore",2+64,"¶¨•rÌáĞÑÆ÷")
+content = inputBox("Õˆİ”ÈëÒªÌáĞÑµÄÊÂí—","ÌáĞÑƒÈÈİ")
 
-'æé†’æ–‡ä»¶èµ·å
+'ÌáĞÑÎÄ¼şÆğÃû
 rawFileName = Cstr(date) & Cstr(time)
 validFileName = Replace(Replace(Replace(Replace(rawFileName, "/", ""), ":", ""), "-", ""), " ", "")
 validFileName = Left(validFileName, 13)
@@ -17,30 +17,30 @@ fileName = path & validFileName & ".vbs"
 
 fso.createTextFile(filename)
 
-'ç·¨å¯«æé†’æ–‡ä»¶å…§å®¹
+'¾Œ‘ÌáĞÑÎÄ¼şƒÈÈİ
 set edit = fso.openTextFile(filename,2, True)
 
-'æé†’æ™‚ç™¼è²
+'ÌáĞÑ•r°lÂ•
 edit.writeLine "set sapi = CreateObject(""SAPI.SpVoice"")" 
 edit.writeLine "sapi.Speak(""" & content & """)" 
 
-edit.writeLine "msgBox """ & content & """,4096+64,""æé†’"""
+edit.writeLine "msgBox """ & content & """,4096+64,""ÌáĞÑ"""
 edit.close
 
 select case input
 
-case 3: 'é–‹æ©Ÿæé†’
+case 3: 'é_™CÌáĞÑ
     targetFolder = WshShell.SpecialFolders("Startup") & "\"
     fso.MoveFile fileName, targetFolder
     'ws.run "schtasks /create /sc ONSTART /tn RemindTask /tr " & fileName 
 
-case 4: 'æŒ‡å®šæ—¥æœŸåŠæ™‚é–“
-    targetTime = inputbox("æŒ‡å®šæ¯æ—¥ç‰¹å®šæ™‚é–“æé†’-è«‹è¼¸å…¥æŒ‡å®šçš„å°æ™‚åŠåˆ†é˜ï¼ˆç”¨å†’è™Ÿåˆ†éš” e.g. 08:00,äºŒåå››å°æ™‚åˆ¶ç”¨è‹±æ–‡åŠè§’å†’è™Ÿï¼‰",,":")
-    targetDate = inputbox("æŒ‡å®šæ—¥æœŸï¼ˆç”¨/åˆ†éš” e.g. 24/01/2024ï¼‰",,"//")
+case 4: 'Ö¸¶¨ÈÕÆÚ¼°•rég
+    targetTime = inputbox("Ö¸¶¨Ã¿ÈÕÌØ¶¨•régÌáĞÑ-Õˆİ”ÈëÖ¸¶¨µÄĞ¡•r¼°·ÖçŠ£¨ÓÃÃ°Ì–·Ö¸ô e.g. 08:00,¶şÊ®ËÄĞ¡•rÖÆÓÃÓ¢ÎÄ°ë½ÇÃ°Ì–£©",,":")
+    targetDate = inputbox("Ö¸¶¨ÈÕÆÚ£¨ÓÃ/·Ö¸ô e.g. 24/01/2024£©",,"//")
     ws.run "schtasks /create /sc ONCE /tn " & validFileName &" /st " & targetTime & " /sd " & targetDate  & " /tr " & fileName
 
-case 5: 'æ¯æ—¥é‹è¡Œï¼Œå¯æŒ‡å®šå…·é«”æ™‚é–“
-    targetTime = inputbox("æŒ‡å®šæ¯æ—¥ç‰¹å®šæ™‚é–“æé†’-è«‹è¼¸å…¥æŒ‡å®šçš„å°æ™‚åŠåˆ†é˜ï¼ˆç”¨å†’è™Ÿåˆ†éš” e.g. 08:00,äºŒåå››å°æ™‚åˆ¶ç”¨è‹±æ–‡åŠè§’å†’è™Ÿï¼‰",,":")
+case 5: 'Ã¿ÈÕß\ĞĞ£¬¿ÉÖ¸¶¨¾ßów•rég
+    targetTime = inputbox("Ö¸¶¨Ã¿ÈÕÌØ¶¨•régÌáĞÑ-Õˆİ”ÈëÖ¸¶¨µÄĞ¡•r¼°·ÖçŠ£¨ÓÃÃ°Ì–·Ö¸ô e.g. 08:00,¶şÊ®ËÄĞ¡•rÖÆÓÃÓ¢ÎÄ°ë½ÇÃ°Ì–£©",,":")
     ws.run "schtasks /create /sc DAILY /tn " & validFileName &" /st " & targetTime &  " /tr " & fileName
 
 end select
