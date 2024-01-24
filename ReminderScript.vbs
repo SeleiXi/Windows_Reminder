@@ -33,12 +33,12 @@ Select Case input
         ' ws.Run "schtasks /create /sc ONSTART /tn RemindTask /tr " & fileName
 
     Case 4 ' Specify date and time
-        targetTime = InputBox("Specify the time for the reminder (in HH:MM format, 24-hour clock)",, ":")
-        targetDate = InputBox("Specify the date (in DD/MM/YYYY format)",, "//")
+        targetTime = InputBox("Specify the time for the reminder (in HH:MM format e.g. 01:23 (1:23 is not allowed), 24-hour clock)",, ":")
+        targetDate = InputBox("Specify the date (in DD/MM/YYYY format (1/1/2024 is not allowed. Please use the format 01/01/2024 instead) )",, "//")
         ws.Run "schtasks /create /sc ONCE /tn " & validFileName & " /st " & targetTime & " /sd " & targetDate & " /tr " & fileName
 
     Case 5 ' Daily reminder at specified time
-        targetTime = InputBox("Specify the time for the daily reminder (in HH:MM format, 24-hour clock)",, ":")
+        targetTime = InputBox("Specify the time for the daily reminder (in HH:MM format e.g. 01:23 (1:23 is not allowed), 24-hour clock)",, ":")
         ws.Run "schtasks /create /sc DAILY /tn " & validFileName & " /st " & targetTime & " /tr " & fileName
 
 End Select
