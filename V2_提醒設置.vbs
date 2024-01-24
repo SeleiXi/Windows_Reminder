@@ -1,59 +1,44 @@
-on error resume next
-input = msgbox("ßx“ñÖĞÖ¹=é_™CÌáĞÑ£»ÖØÔ‡=Ö¸¶¨ÈÕÆÚ•régÌáĞÑ£»ºöÂÔ=Ã¿ÌìµÄÖ¸¶¨•régÌáĞÑ£¬ßMÈëÔOÖÃÕˆİ”Èësetting",2+64,"¶¨•rÌáĞÑÆ÷")
-content = inputbox("Õˆİ”ÈëÒªÌáĞÑµÄÊÂí—","ÌáĞÑƒÈÈİ")
-set fso = createobject("scripting.filesystemobject")
-dim paths(4)
-paths(0) = fso.getfile(wscript.scriptfullname).parentfolder + "\"
-paths(1) = "C:\"
-paths(2) = "D:\"
-paths(3) = "E:\"
+set ws = wscript.createObject("Wscript.Shell")
+set fso = createObject("scripting.filesystemobject")
+Set wshShell = createObject("WScript.Shell")
 
-err.description = False
-continue = False
-for each path in paths
-  test = path + "test.txt"
-  fso.createtextfile(test)
-  if fso.fileexists(test) then
-    continue = True
-  end if
-  if continue = True then
-    fso.DeleteFile(test)
-    exit for
-  end if
-Next
-Last_filename = ""
-creation_moment = Cstr(date+time)
-filename = path+creation_moment +".vbs"
-filename = Cstr(filename)
-Last_Filename = (Replace(filename,"/","-"))
-Last_Filename = (Replace(Last_Filename,":","-",4))
-Last_filename = Replace(Last_Filename," ","")
-Last_Filename = Cstr(Last_Filename)
-fso.createtextfile("C:\" + Last_filename)
-fso.createtextfile("")
+path = fso.getFile(wscript.scriptFullName).parentFolder + "\"
 
-set edit = fso.opentextfile(Last_Filename,8,False)
-edit.writeline "set sapi = CreateObject("&chr(34)&"SAPI.SpVoice"&chr(34)&")"
-edit.writeline "sapi.Speak(" &chr(34)& content &chr(34)&")"
-edit.writeline "msgbox "&chr(34)&content&chr(34)&",4096+64,"&chr(34)&"ÌáĞÑ"&chr(34)&""
+input = msgBox("1.é–‹æ©Ÿæé†’ï¼šAbort" & vbCrLf & "2.é‡è©¦ï¼šRetry " & vbCrLf & "3.æ¯å¤©çš„æŒ‡å®šæ™‚é–“æé†’ï¼šIgnore",2+64,"å®šæ™‚æé†’å™¨")
+content = inputBox("è«‹è¼¸å…¥è¦æé†’çš„äº‹é …","æé†’å…§å®¹")
+
+'æé†’æ–‡ä»¶èµ·å
+rawFileName = Cstr(date) & Cstr(time)
+validFileName = Replace(Replace(Replace(Replace(rawFileName, "/", ""), ":", ""), "-", ""), " ", "")
+validFileName = Left(validFileName, 13)
+fileName = path & validFileName & ".vbs"
+
+fso.createTextFile(filename)
+
+'ç·¨å¯«æé†’æ–‡ä»¶å…§å®¹
+set edit = fso.openTextFile(filename,2, True)
+
+'æé†’æ™‚ç™¼è²
+edit.writeLine "set sapi = CreateObject(""SAPI.SpVoice"")" 
+edit.writeLine "sapi.Speak(""" & content & """)" 
+
+edit.writeLine "msgBox """ & content & """,4096+64,""æé†’"""
 edit.close
-set path = fso.getfile("C:\" + Last_Filename)
-msgbox last_filename
-path.attributes = 2
 
-if input = 3 then 'é_™CÌáĞÑ
-'ws.run"schtasks /create /sc DAILY /tn "&task& " /tr " & filename  
+select case input
 
-elseif input = 4 then 'Ö¸¶¨ÈÕÆÚ¼°•rég
-'ws.run"schtasks /create /sc DAILY /tn "&task& " /tr " & filename 
-input_items = inputbox("Õˆİ”ÈëÖ¸¶¨µÄÈÕÆÚºÍ•rég(day month hour min),24Ğ¡•rÖÆ,Ó›µÃÓÃ¿Õ¸ñ·Ö¸ôé_")
-task_time = split(input_items) ' 4¸ñµÄarray
+case 3: 'é–‹æ©Ÿæé†’
+    targetFolder = WshShell.SpecialFolders("Startup") & "\"
+    fso.MoveFile fileName, targetFolder
+    'ws.run "schtasks /create /sc ONSTART /tn RemindTask /tr " & fileName 
 
+case 4: 'æŒ‡å®šæ—¥æœŸåŠæ™‚é–“
+    targetTime = inputbox("æŒ‡å®šæ¯æ—¥ç‰¹å®šæ™‚é–“æé†’-è«‹è¼¸å…¥æŒ‡å®šçš„å°æ™‚åŠåˆ†é˜ï¼ˆç”¨å†’è™Ÿåˆ†éš” e.g. 08:00,äºŒåå››å°æ™‚åˆ¶ç”¨è‹±æ–‡åŠè§’å†’è™Ÿï¼‰",,":")
+    targetDate = inputbox("æŒ‡å®šæ—¥æœŸï¼ˆç”¨/åˆ†éš” e.g. 24/01/2024ï¼‰",,"//")
+    ws.run "schtasks /create /sc ONCE /tn " & validFileName &" /st " & targetTime & " /sd " & targetDate  & " /tr " & fileName
 
-elseif input = 5 then 'Ö¸¶¨Ã¿Ìì•rég
-SetTime = inputbox("Ö¸¶¨Ã¿ÈÕÌØ¶¨•régÌáĞÑ-Õˆİ”ÈëÖ¸¶¨µÄĞ¡•r¼°·ÖçŠ£¨ÓÃÃ°Ì–·Ö¸ô e.g. 08:00,¶şÊ®ËÄĞ¡•rÖÆÓÃÓ¢ÎÄ°ë½ÇÃ°Ì–£©",,":")
-order = "schtasks /create /tn ParticularTimeEveryDay /tr C:\"&Last_Filename& "/sc daily /st " & SetTime
-x = inputbox("x",,order)
-msgbox("test")
-ws.run order
-end if
+case 5: 'æ¯æ—¥é‹è¡Œï¼Œå¯æŒ‡å®šå…·é«”æ™‚é–“
+    targetTime = inputbox("æŒ‡å®šæ¯æ—¥ç‰¹å®šæ™‚é–“æé†’-è«‹è¼¸å…¥æŒ‡å®šçš„å°æ™‚åŠåˆ†é˜ï¼ˆç”¨å†’è™Ÿåˆ†éš” e.g. 08:00,äºŒåå››å°æ™‚åˆ¶ç”¨è‹±æ–‡åŠè§’å†’è™Ÿï¼‰",,":")
+    ws.run "schtasks /create /sc DAILY /tn " & validFileName &" /st " & targetTime &  " /tr " & fileName
+
+end select
