@@ -1,3 +1,5 @@
+'如出現報錯，將文件以ANSI編碼保存
+
 set ws = wscript.createObject("Wscript.Shell")
 set fso = createObject("scripting.filesystemobject")
 Set wshShell = createObject("WScript.Shell")
