@@ -1,4 +1,4 @@
-'如出現"字符串未結束"問題，將文件以ANSI編碼保存
+'如出現報錯，將文件以ANSI編碼保存
 
 set ws = wscript.createObject("Wscript.Shell")
 set fso = createObject("scripting.filesystemobject")
@@ -6,7 +6,7 @@ Set wshShell = createObject("WScript.Shell")
 
 path = fso.getFile(wscript.scriptFullName).parentFolder + "\"
 
-input = msgBox("1.開機提醒：Abort" & vbCrLf & "2.重試：Retry " & vbCrLf & "3.每天的指定時間提醒：Ignore",2+64,"定時提醒器")
+input = msgBox("1.每次開機提醒：Abort" & vbCrLf & "2.指定日期及時間：Retry " & vbCrLf & "3.每天的指定時間提醒：Ignore",2+64,"定時提醒器")
 content = inputBox("請輸入要提醒的事項","提醒內容")
 
 '提醒文件起名
