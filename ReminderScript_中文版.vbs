@@ -35,12 +35,12 @@ case 3: '開機提醒
     'ws.run "schtasks /create /sc ONSTART /tn RemindTask /tr " & fileName 
 
 case 4: '指定日期及時間
-    targetTime = inputbox("指定每日特定時間提醒-請輸入指定的小時及分鐘（用冒號分隔 e.g. 08:00,二十四小時制用英文半角冒號）",,":")
-    targetDate = inputbox("指定日期（用/分隔 e.g. 24/01/2024）",,"//")
+    targetTime = inputbox("指定每日特定時間提醒-請輸入指定的小時及分鐘（用冒號分隔 e.g. 08:00(不能寫成8:00), 二十四小時制,用英文半角冒號）",,":")
+    targetDate = inputbox("指定日期（用/分隔 e.g. 24/01/2024）(不能寫成24/1/2024)",,"//")
     ws.run "schtasks /create /sc ONCE /tn " & validFileName &" /st " & targetTime & " /sd " & targetDate  & " /tr " & fileName
 
 case 5: '每日運行，可指定具體時間
-    targetTime = inputbox("指定每日特定時間提醒-請輸入指定的小時及分鐘（用冒號分隔 e.g. 08:00,二十四小時制用英文半角冒號）",,":")
+    targetTime = inputbox("指定每日特定時間提醒-請輸入指定的小時及分鐘（用冒號分隔 e.g. 08:00(不能寫成8:00), 二十四小時制用英文半角冒號）",,":")
     ws.run "schtasks /create /sc DAILY /tn " & validFileName &" /st " & targetTime &  " /tr " & fileName
 
 end select
