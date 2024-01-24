@@ -1,4 +1,4 @@
-僅適用於Windows
+僅適用於Windows，下載到電腦點擊即可運行
 
 中文版腳本出現"字符串未結束"問題的解決方法:
   1.右鍵文件 2.選擇編輯 
@@ -14,7 +14,8 @@
 輸入時注意：日期不能寫成 1/1/2024而是要寫成 01/01/2024，填寫時間同理要寫成 01:01
 
 
-Applicable for Windows only.
+Applicable for Windows only. 
+Download to your computer and run with a click.
 
 Delete the task you have created:
   1.Open 'Task Scheduler'.
