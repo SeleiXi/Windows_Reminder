@@ -16,7 +16,7 @@ fileName = path & validFileName & ".vbs"
 fso.createTextFile(fileName)
 
 ' Write the reminder file content
-Set edit = fso.OpenTextFile(fileName, 2, True)
+set edit = fso.OpenTextFile(fileName, 2, True)
 
 ' Speak the reminder
 edit.writeLine "set sapi = createObject(""SAPI.SpVoice"")"
