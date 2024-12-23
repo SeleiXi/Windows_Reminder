@@ -1,4 +1,4 @@
-##【繁中介紹】
+## 【繁中介紹】
 只係適用於Windows系統，download咗之後可以直接運行
 
 中文版script可能會出現"String未結束"呢個問題，
@@ -16,7 +16,7 @@
 
 ---
 
-##【Introduction in English】
+## 【Introduction in English】
 Applicable for Windows only. 
 Download to your computer and run with a click.
 
@@ -31,7 +31,7 @@ Note when entering input: Dates should be written as '01/01/2024' instead of '1/
 
 ---
 
-##【简中介绍】
+## 【简中介绍】
 仅适用于Windows系统，下载到电脑点击即可运行
 
 中文版脚本出现"字符串未结束"问题的解决方法:
